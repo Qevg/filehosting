@@ -60,7 +60,7 @@ class DownloadController
         if (!empty($file) && file_exists($file->getPath())) {
             $response = $response->withHeader('Content-Type', $file->getMimeType());
             $response = $response->withHeader('Content-Lenth', $file->getSize());
-            $response = $response->withHeader('Content-Disposition', "attachment; filename={$file->getOriginalName()}");
+            $response = $response->withHeader('Content-Disposition', "attachment; filename=\"{$file->getOriginalName()}\"");
             if (strpos($serverSoftware, "nginx") !== false && strtolower($this->config['XSendFile']) === 'on') {
                 $response = $response->withHeader('X-Accel-Redirect', $this->pathHelper->getXAccelPath($file->getPath()));
             } elseif (strpos($serverSoftware, "apache") !== false && strtolower($this->config['XSendFile']) === 'on' && in_array('mod_xsendfile', apache_get_modules())) {
