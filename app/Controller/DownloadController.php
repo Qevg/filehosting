@@ -42,8 +42,6 @@ class DownloadController
         $this->config = $c->get('config');
     }
 
-
-
     /**
      * File download
      * If XSendFile is supported, used one. If XSendFile is not supported, used readfile
@@ -59,7 +57,7 @@ class DownloadController
     {
         $serverSoftware = $request->getServerParam('SERVER_SOFTWARE');
         $file = $this->fileMapper->getFileByFileName(strval($args['name']));
-        if (file_exists($file->getPath())) {
+        if (!empty($file) && file_exists($file->getPath())) {
             $response = $response->withHeader('Content-Type', $file->getMimeType());
             $response = $response->withHeader('Content-Lenth', $file->getSize());
             $response = $response->withHeader('Content-Disposition', "attachment; filename={$file->getOriginalName()}");
