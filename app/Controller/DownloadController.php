@@ -5,6 +5,7 @@ namespace Filehosting\Controller;
 use Filehosting\Database\FileMapper;
 use Filehosting\Helper\PathHelper;
 use Slim\Container;
+use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -41,6 +42,8 @@ class DownloadController
         $this->config = $c->get('config');
     }
 
+
+
     /**
      * File download
      * If XSendFile is supported, used one. If XSendFile is not supported, used readfile
@@ -50,6 +53,7 @@ class DownloadController
      * @param array $args
      *
      * @return Response
+     * @throws NotFoundException
      */
     public function __invoke(Request $request, Response $response, array $args): Response
     {
@@ -67,7 +71,9 @@ class DownloadController
                 readfile($file->getPath());
             }
             $this->fileMapper->increaseNumOfDownloads($file->getName());
+            return $response;
+        } else {
+            throw new NotFoundException($request, $response);
         }
-        return $response;
     }
 }
