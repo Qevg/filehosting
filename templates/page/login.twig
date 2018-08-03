@@ -1,0 +1,30 @@
+{% extends 'base.twig' %}
+{% block lang %}{{ 'ru' }}{% endblock %}
+{% block title %}{{ 'Авторизация' }}{% endblock %}
+{% block body %}
+    <div class="auth-block">
+        <div class="container">
+            <form action="/register" method="post" class="form-controll" id="auth-form">
+                <a href="/"><img class="auth-block__logo" src="/image/upload.svg" alt="logo" title="Главная"></a>
+                <input id="csrfName" type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
+                <input id="csrfValue" type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
+                <span id="all-error" class="auth-block__all-error"></span>
+                <div class="form-group">
+                    <label class="sr-only" for="email">Email</label>
+                    <input type="email" id="email" class="form-control" name="email" placeholder="Email Адрес" title="Заполните это поле">
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="password">Password</label>
+                    <input type="password" id="password" class="form-control" name="password" placeholder="Пароль" title="Заполните это поле">
+                </div>
+                <div class="form-group">
+                    <button id="auth-submit" type="submit" class="btn btn-primary btn-block" onclick="submitAuth(event, '/login')">Войти</button>
+                </div>
+                <span>Нет аккаунта? <a href="/register">Зарегистрироваться</a></span>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block pageScript %}
+    <script src="/js/auth.js"></script>
+{% endblock %}

@@ -1,0 +1,44 @@
+<div id="update-file-data_{{ file.name }}" class="update-file-data block">
+    <div class="update-file-data__header">
+        <h3 id="file-name">{{ file.originalName }}</h3>
+    </div>
+    {% if controller == 'upload' %}
+        <form action="/" method="post" id="form-update-data">
+    {% else %}
+        <form action="/update/{{ file.name }}" method="post" id="form-update-data">
+    {% endif %}
+        <div class="update-file-data__body">
+            <div class="row">
+                <input id="csrfName" type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
+                <input id="csrfValue" type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
+                <div class="form-group update-file-data__description">
+                    <div class="col-lg-3">
+                        <label class="control-label" for="description">Описание</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <textarea class="form-control description" name="description" id="description" rows="3" maxlength="120">{{ file.description }}</textarea>
+                        <span id="description-error-text" class="text-danger"></span>
+                        <p>
+                            <span id="char-count"></span>
+                            <span> / 120 знаков</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="update-file-data__footer">
+            <div class="row">
+                <div class="col-lg-6">
+                    {% if controller == 'upload' %}
+                        <a id="update-file-data-cancel" class="btn btn-default"> Отмена</a>
+                    {% else %}
+                        <a id="update-file-data-cancel" class="btn btn-default" href="/file/{{ file.name }}"> Отмена</a>
+                    {% endif %}
+                </div>
+                <div class="col-lg-6 text-right">
+                    <button id="update-file-data-submit" class="btn btn-primary" type="submit" name="formEditFile"> Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

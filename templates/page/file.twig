@@ -1,0 +1,32 @@
+{% extends 'base.twig' %}
+{% block lang %}{{ 'ru' }}{% endblock %}
+{% block title %}{{ file.originalName }}{% endblock %}
+{% block body %}
+    {% include 'modal-image.twig' %}
+    {% include 'navbar.twig' %}
+        <div class="container">
+            <div class="main main-page-file">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-2"></div>
+                    <div class="col-lg-6 col-md-7 col-sm-9">
+                        {% include 'block-file.twig' %}
+                        {% include 'updateFileData.twig' %}
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-2">
+                        {% if file.userName == NULL and file.canManage == true %}
+                        <div class="warning-for-anon-file-upload block">
+                            <p>Вы размещаете файлы Анонимно</p>
+                            <p>Права на управление файлами могут быть потеряны</p>
+                            <p><a href="/register">Зарегистрируйтесь</a>, чтобы загруженные файлы привязывались к вашему аккаунту</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% include 'comment-template.twig' %}
+{% endblock %}
+{% block pageScript %}
+    <link rel="stylesheet" href="/css/animate.css">
+    <script src="/js/file.js"></script>
+{% endblock %}

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="{% block lang %}{% endblock %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    {% block pageStyleSheet %}{% endblock %}
+</head>
+<body>
+    {% block body %}{% endblock %}
+    {% block script %}
+        <script src="/bootstrap/js/jquery.min.js"></script>
+        <script src="/bootstrap/js/jquery-ui.min.js"></script>
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
+    {% endblock %}
+    {% block pageScript %}{% endblock %}
+</body>
+</html>

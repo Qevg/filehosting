@@ -1,0 +1,92 @@
+{% extends 'base.twig' %}
+{% block lang %}{{ 'ru' }}{% endblock %}
+{% block title %}{{ 'Главная страница' }}{% endblock %}
+{% block body %}
+    <div id="drop-zone" class="drop-zone">
+        <div id="drop-zone-hover" class="drop-zone-hover">
+            <div class="border"></div>
+        </div>
+        {% include 'navbar.twig' %}
+        <div class="container">
+            <div class="main-upload" id="main-upload">
+                <div class="row">
+                    <div class="center-block main-upload__logo">
+                        <img src="/image/upload.svg" alt="Cloud" onerror="this.src='/image/upload.png'">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="center-block main-upload__form">
+                        <form id="form-file-upload" action="/" enctype="multipart/form-data" method="post">
+                            <input id="csrfName" type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
+                            <input id="csrfValue" type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
+                            <label class="btn btn-primary btn-lg btn-block">Выбрать файл
+                                <input class="main-upload__input" id="file" type="file" name="file">
+                            </label>
+                            <span class="main-upload__file-size-limit">Размер файла не более 100MB</span>
+                        </form>
+                    </div>
+                </div>
+                <div class="row main-upload__info-block">
+                    <div class="text-left">
+                        <p id="drop-text"><span class="glyphicon glyphicon-duplicate"></span> Вы также можете перетащить файл на эту страницу</p>
+                        <p id="clipboard-text"><span class="glyphicon glyphicon-picture"></span> Вставить картинку из буфера обмена</p>
+                        <p><span class="glyphicon glyphicon-hdd"></span> Воспользоваться <a href="">клиентом</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="main-loading" id="main-load">
+                <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        <div id="load-file-error" class="load-file-error block">
+                            <div class="load-file-error__header">
+                                <h3>Произошла ошибка</h3>
+                            </div>
+                            <div class="load-file-error__body">
+                                <p id="load-file-error__text"></p>
+                            </div>
+                        </div>
+                        <div id="load-file" class="load-file block">
+                            <div class="load-file__header">
+                                <h3>Загрузка файла...</h3>
+                            </div>
+                            <div class="load-file__body">
+                                <progress id="progress-bar" value="0" max="100"></progress>
+                                <span id="progress-text"></span>
+                            </div>
+                        </div>
+                        <div id="load-file-success" class="load-file-success block">
+                            <div class="load-file-success__header">
+                                <h3>Поделитесь файлом</h3>
+                            </div>
+                            <div class="load-file-success__body">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-lg-3">
+                                            <label for="file-link" class="control-label">Ссылка</label>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <div class="input-group">
+                                                <input id="file-link" class="form-control" type="text" value="">
+                                                <span class="input-group-btn">
+                                                    <a class="btn btn-default" id="go-to-file" href="">Перейти</a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% include 'updateFileData.twig' %}
+                    </div>
+                    <div class="col-lg-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block pageScript %}
+    <link rel="stylesheet" href="/css/animate.css">
+    <script src="/js/upload.js"></script>
+    <script src="/js/file.js"></script>
+{% endblock %}

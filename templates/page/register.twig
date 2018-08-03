@@ -1,0 +1,36 @@
+{% extends 'base.twig' %}
+{% block lang %}{{ 'ru' }}{% endblock %}
+{% block title %}{{ 'Регистрация' }}{% endblock %}
+{% block body %}
+    <div class="auth-block">
+        <div class="container">
+            <form action="/register" method="post" class="form-controll" id="auth-form">
+                <a href="/"><img class="auth-block__logo" src="/image/upload.svg" alt="logo" title="Главная"></a>
+                <input id="csrfName" type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
+                <input id="csrfValue" type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
+                <div class="form-group">
+                    <label class="sr-only" for="name">Name</label>
+                    <input type="text" id="name" class="form-control" name="name" placeholder="Имя пользователя" title="Заполните это поле">
+                    <span id="name-error" class="auth-block__name-error"></span>
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="email">Email</label>
+                    <input type="email" id="email" class="form-control" name="email" placeholder="Email Адрес" title="Заполните это поле">
+                    <span id="email-error" class="auth-block__email-error"></span>
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="password">Password</label>
+                    <input type="password" id="password" class="form-control" name="password" placeholder="Пароль" title="Заполните это поле">
+                    <span id="password-error" class="auth-block__password-error"></span>
+                </div>
+                <div class="form-group">
+                    <button id="auth-submit" type="submit" class="btn btn-primary btn-block" onclick="submitAuth(event, '/register')">Зарегистрироваться</button>
+                </div>
+                <span>Уже зарегистрированы? </span><a href="/login">Войти</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block pageScript %}
+    <script src="/js/auth.js"></script>
+{% endblock %}

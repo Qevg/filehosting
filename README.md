@@ -1,0 +1,79 @@
+# Filehosting
+
+## Used technologies
+1. [Twitter Bootstrap]
+2. [Slim] micro framework
+3. [Redis] key-value NoSQL database
+4. [Pimple] dependency injection container
+5. [Twig] template engine
+6. [Sphinx] search engine
+6. [jQuery] javascript library
+7. [GetId3] media file parser
+8. [Codeception] testing PHP framework
+
+## Requirements
+1. [PHP] >= 7.1
+2. [PostgreSQL]
+3. [Sphinx]
+4. [Composer]
+
+## Installation
+1. Use the `git clone https://github.com/Qevg/filehosting.git` command to clone the repository
+2. Set `public` directory as a document root on your web server
+3. Use the `composer install` command to install dependencies
+4. Import database `filehosting.sql` on your database
+5. Change configuration in the `config.json` and `sphinx.conf`
+6. Сonfigure the web server [as specified here]
+7. Set `upload max file size` and `post max size` on your web server
+    * The value must match the `maxFileSize` parameter in the `config.json`
+8. [Initialize search indexes] with the `indexer --config config/sphinx.conf --all` command
+9. [Start sphinx service] with the `searchd --config config/sphinx.conf` command
+
+## Additional Features
+### XSendfile
+If your server has `XSendFile` module installed and configured, then you can enable it in the `config.json` file, setting the `XSendFile` option to `on`. If you're using Nginx don't forget to set `storage` folder [as internal] in your config file.
+
+Example:
+```
+location /storage {
+    internal;
+    root /path/to/project;
+}
+```
+
+## Tests
+##### For tests, you need a test database
+1. Create test database for tests
+2. Change configuration "db" in the `codeception.yml`, `tests/_data/config/config.json` and `tests/_data/config/sphinx.conf`
+
+##### Also, for tests you need to start a new sphinxsearch service
+1. Make sure that searchd is not running
+2. Change configuration "sphinx" in the `tests/_data/config/config.json` and `tests/_data/config/sphinx.conf`. Do not forget to change the path in which the sphinx files will be saved
+3. [Initialize search indexes] with the `indexer --config tests/_data/config/sphinx.conf --all` command
+4. [Start sphinx service] with the `searchd --config tests/_data/config/sphinx.conf` command
+
+##### Command to run the tests:
+```
+$ codecept run
+```
+
+## License
+This application is licensed under the MIT license. For more information refer to [License file].
+
+[Twitter Bootstrap]: <https://getbootstrap.com/>
+[Slim]: <https://www.slimframework.com/>
+[Redis]: <https://redis.io/>
+[Pimple]: <https://pimple.symfony.com/>
+[Twig]: <https://twig.symfony.com/>
+[Sphinx]: <http://sphinxsearch.com/>
+[jQuery]: <https://jquery.org/>
+[GetId3]: <http://getid3.sourceforge.net/>
+[Codeception]: <https://codeception.com/>
+[PHP]: <https://secure.php.net/>
+[PostgreSQL]: <https://www.postgresql.org/>
+[Composer]: <https://getcomposer.org/>
+[as specified here]: <https://www.slimframework.com/docs/v3/start/web-servers.html>
+[Initialize search indexes]: <http://sphinxsearch.com/docs/current/ref-indexer.html>
+[Start sphinx service]: <http://sphinxsearch.com/docs/current/ref-searchd.html>
+[as internal]: <https://nginx.org/en/docs/http/ngx_http_core_module.html#internal>
+[License file]: <https://github.com/Qevg/filehosting/blob/master/LICENSE>

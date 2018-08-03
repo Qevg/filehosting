@@ -1,0 +1,26 @@
+<div id="comment-{{ comment.id }}" class="comment" data-parent-id="{{ comment.parentId }}">
+    <div class="comment__depth-{{ comment.getDepth }}">
+        <div class="comment__avatar">
+            {% if comment.userAvatar is not null %}
+                <img src="{{ comment.userAvatar }}" alt="">
+            {% else %}
+                <img src="/image/avatar_default.jpg" alt="">
+            {% endif %}
+        </div>
+        <div class="comment__user-name">
+            {% if comment.userName is not null %}
+                <h4>{{ comment.userName }}</h4>
+            {% else %}
+                <h4>Аноним</h4>
+            {% endif %}
+        </div>
+        <div class="comment__text">
+            <p>{{ comment.text }}</p>
+        </div>
+        <div class="comment__date">
+            <span>{{ comment.date }}</span>
+        </div>
+        <span class="comment__reply btn-link" onclick="replyComment('{{ file.name }}', '{{ comment.id }}', '{{ comment.userName }}')">Ответить</span>
+        <input type="radio" id="comment-reply-{{ comment.id }}" name="reply-comment-id" value="{{ comment.id }}" hidden>
+    </div>
+</div>

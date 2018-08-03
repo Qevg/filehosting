@@ -1,0 +1,26 @@
+{
+  "require": {
+    "php": ">=7.1",
+    "slim/slim": "^3.0",
+    "slim/csrf": "^0.8.2",
+    "twig/twig": "^2.0",
+    "slim/twig-view": "^2.3",
+    "james-heinrich/getid3": "^1.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "Filehosting\\": "app/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Filehosting\\Tests\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7",
+    "mikey179/vfsStream": "^1.6",
+    "codeception/codeception": "^2.4",
+    "herloct/codeception-slim-module": "^1.1"
+  }
+}

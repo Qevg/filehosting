@@ -1,0 +1,31 @@
+{% extends 'base.twig' %}
+{% block lang %}{{ 'ru' }}{% endblock %}
+{% block title %}{{ 'Файлы' }}{% endblock %}
+{% block body %}
+    {% include 'modal-image.twig' %}
+    {% include 'navbar.twig' %}
+        <div class="container">
+            <div class="main main-page-file">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-2"></div>
+                    <div class="col-lg-6 col-md-7 col-sm-9">
+                        {% if files is not empty %}
+                            {% for file in files %}
+                                {% include 'block-file.twig' %}
+                            {% endfor %}
+                        {% else %}
+                            <div class="block">
+                                <span class="files-not-found">Файлы не найдены</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-2"></div>
+                </div>
+            </div>
+        </div>
+    {% include 'comment-template.twig' %}
+{% endblock %}
+{% block pageScript %}
+    <link rel="stylesheet" href="/css/animate.css">
+    <script src="/js/file.js"></script>
+{% endblock %}

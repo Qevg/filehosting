@@ -1,0 +1,52 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed pull-left" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar top-bar"></span>
+                <span class="icon-bar middle-bar"></span>
+                <span class="icon-bar bottom-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">FileHosting</a>
+            <div class="block-search-mobile">
+                <form action="/files" class="navbar-form">
+                    <input type="search" name="query" class="form-control search-input" placeholder="Поиск" aria-label="Поиск">
+                </form>
+            </div>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-left">
+                {% if controller == 'files' %}
+                    <li class="active"><a href="/files">Файлы</a></li>
+                {% else %}
+                    <li class=""><a href="/files">Файлы</a></li>
+                {% endif %}
+            </ul>
+            <div class="block-search-desktop col-lg-4 col-md-4 col-sm-4">
+                <form action="/files" class="navbar-form navbar-center">
+                    <input type="search" name="query" class="form-control search-input" placeholder="Поиск" aria-label="Поиск">
+                </form>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user is null %}
+                    <li><a href="/login">Войти</a></li>
+                    <li><a href="/register">Зарегистрироваться</a></li>
+                {% else %}
+                    <form id="form-logout" action="/logout" method="post">
+                        <input id="csrfName" type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
+                        <input id="csrfValue" type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
+                    </form>
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <img src="/image/avatar_default.jpg" alt="">
+                            {{ user.name }}<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li id="logout" onclick="logOut(event)"><a href="#"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
