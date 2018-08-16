@@ -2,7 +2,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <img src="{{ file.thumbnailPath }}" alt="" data-dismiss="modal" aria-hidden="true">
+                {% if controller == 'file' %}
+                    <img src="{{ file.thumbnailPath }}" alt="" data-dismiss="modal" aria-hidden="true">
+                {% else %}
+                    <img src="" alt="" data-dismiss="modal" aria-hidden="true">
+                {% endif %}
             </div>
         </div>
     </div>

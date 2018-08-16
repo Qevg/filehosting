@@ -38,7 +38,7 @@ $container['sphinx'] = function (Container $c) {
 };
 
 $container['twig'] = function (Container $c) {
-    $twig = new \Slim\Views\Twig(__DIR__ . '/../templates');
+    $twig = new \Slim\Views\Twig(__DIR__ . '/../templates', array('strict_variables' => true));
 
     $jsonDecode = new Twig_SimpleFunction('json_decode', function (string $string) {
         return json_decode($string, true);

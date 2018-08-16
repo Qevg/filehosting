@@ -1,6 +1,14 @@
-<div id="update-file-data_{{ file.name }}" class="update-file-data block">
+{% if controller == 'upload' %}
+    <div id="update-file-data_" class="update-file-data block">
+{% else %}
+    <div id="update-file-data_{{ file.name }}" class="update-file-data block">
+{% endif %}
     <div class="update-file-data__header">
-        <h3 id="file-name">{{ file.originalName }}</h3>
+        {% if controller == 'upload' %}
+            <h3 id="file-name"></h3>
+        {% else %}
+            <h3 id="file-name">{{ file.originalName }}</h3>
+        {% endif %}
     </div>
     {% if controller == 'upload' %}
         <form action="/" method="post" id="form-update-data">
@@ -16,7 +24,11 @@
                         <label class="control-label" for="description">Описание</label>
                     </div>
                     <div class="col-lg-9">
-                        <textarea class="form-control description" name="description" id="description" rows="3" maxlength="120">{{ file.description }}</textarea>
+                        {% if controller == 'upload' %}
+                            <textarea class="form-control description" name="description" id="description" rows="3" maxlength="120"></textarea>
+                        {% else %}
+                            <textarea class="form-control description" name="description" id="description" rows="3" maxlength="120">{{ file.description }}</textarea>
+                        {% endif %}
                         <span id="description-error-text" class="text-danger"></span>
                         <p>
                             <span id="char-count"></span>
