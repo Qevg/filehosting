@@ -161,3 +161,38 @@ $container['errorHandler'] = function (Container $c) {
         );
     };
 };
+
+$container['notAllowedHandler'] = function ($c) {
+    return function (\Slim\Http\Request $request, \Slim\Http\Response $response, array $methods) use ($c) {
+        $response = $response->withStatus(405)->withHeader('Allow', implode(', ', $methods))->withHeader('Content-Type', 'text/html');
+        return $c->get('twig')->render(
+            $response,
+            '/page/error.twig',
+            [
+                'title' => "Method Not Allowed",
+                'caption' => "Method Not Allowed",
+                'message' => 'Method must be one of: ' . implode(', ', $methods),
+                'displayErrors' => 'off',
+                'debugInfo' => null
+            ]
+        );
+    };
+};
+
+$container['phpErrorHandler'] = function (Container $c) {
+    return function (\Slim\Http\Request $request, \Slim\Http\Response $response, Error $error) use ($c) {
+        error_log($error->__toString());
+        $response = $response->withStatus(500)->withHeader('Content-Type', 'text/html');
+        return $c->get('twig')->render(
+            $response,
+            '/page/error.twig',
+            [
+                'title' => "Internal Server Error",
+                'caption' => "Internal Server Error",
+                'message' => "We have technical problems. Refresh the page after some time",
+                'displayErrors' => ini_get("display_errors"),
+                'debugInfo' => $error->__toString()
+            ]
+        );
+    };
+};
