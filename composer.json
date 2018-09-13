@@ -9,7 +9,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Filehosting\\": "app/"
+      "Filehosting\\": "app/",
+      "Filehosting\\Twig\\": "twig/"
     }
   },
   "autoload-dev": {

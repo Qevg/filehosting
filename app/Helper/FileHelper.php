@@ -228,25 +228,4 @@ class FileHelper
             throw new FileUploadException('Failed to move data to redis in the main database');
         }
     }
-
-    /**
-     * Formats bytes to GB, MB, KB
-     *
-     * @param int $size bytes
-     *
-     * @return string
-     */
-    public function formatSize(int $size): string
-    {
-        switch (true) {
-            case ($size >= pow(1024, 3)):
-                return round($size / pow(1024, 3), 2, PHP_ROUND_HALF_DOWN) . 'GB';
-            case ($size >= pow(1024, 2)):
-                return round($size / pow(1024, 2), 1, PHP_ROUND_HALF_DOWN) . 'MB';
-            case ($size >= 1024):
-                return round($size / 1024, 0, PHP_ROUND_HALF_DOWN) . 'KB';
-            default:
-                return $size . 'B';
-        }
-    }
 }

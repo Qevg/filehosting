@@ -40,15 +40,9 @@ $container['sphinx'] = function (Container $c) {
 $container['twig'] = function (Container $c) {
     $twig = new \Slim\Views\Twig(__DIR__ . '/../templates', array('strict_variables' => true));
 
-    $jsonDecode = new Twig_SimpleFunction('json_decode', function (string $string) {
-        return json_decode($string, true);
-    });
-    $twig->getEnvironment()->addFunction($jsonDecode);
+    $twig->getEnvironment()->addExtension(new \Filehosting\Twig\Extensions\JsonDecodeExtension());
 
-    $formatSize = new Twig_SimpleFunction('formatSize', function (int $size) {
-        return \Filehosting\Helper\FileHelper::formatSize($size);
-    });
-    $twig->getEnvironment()->addFunction($formatSize);
+    $twig->getEnvironment()->addExtension(new \Filehosting\Twig\Extensions\FormatSizeExtension());
 
     $twig->getEnvironment()->addExtension(new \Filehosting\Middleware\CsrfMiddleware($c['csrf']));
 
