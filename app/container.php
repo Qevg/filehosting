@@ -111,7 +111,7 @@ $container['CommentValidator'] = function (Container $c) {
 };
 
 $container['AuthHelper'] = function (Container $c) {
-    return new \Filehosting\Helper\AuthHelper($c['UserMapper'], $c['UserValidator'], $c['FileMapper']);
+    return new \Filehosting\Helper\AuthHelper($c['UserMapper'], $c['UserValidator'], $c['FileMapper'], $c['CookieHelper']);
 };
 
 $container['CommentHelper'] = function (Container $c) {
@@ -121,6 +121,10 @@ $container['CommentHelper'] = function (Container $c) {
 
 $container['FileSystemHelper'] = function (Container $c) {
     return new \Filehosting\Helper\FileSystemHelper();
+};
+
+$container['CookieHelper'] = function (Container $c) {
+    return new \Filehosting\Helper\CookieHelper();
 };
 
 $container['notFoundHandler'] = function (Container $c) {

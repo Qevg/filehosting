@@ -32,17 +32,24 @@ class AuthHelper
     private $fileMapper;
 
     /**
+     * @var CookieHelper $cookieHelper
+     */
+    private $cookieHelper;
+
+    /**
      * AuthHelper constructor.
      *
      * @param UserMapper $userMapper
      * @param UserValidator $userValidator
      * @param FileMapper $fileMapper
+     * @param CookieHelper $cookieHelper
      */
-    public function __construct(UserMapper $userMapper, UserValidator $userValidator, FileMapper $fileMapper)
+    public function __construct(UserMapper $userMapper, UserValidator $userValidator, FileMapper $fileMapper, CookieHelper $cookieHelper)
     {
         $this->userMapper = $userMapper;
         $this->userValidator = $userValidator;
         $this->fileMapper = $fileMapper;
+        $this->cookieHelper = $cookieHelper;
     }
 
     /**
@@ -62,7 +69,7 @@ class AuthHelper
         if (empty($errors)) {
             $user->setPassword(password_hash($user->getPassword(), PASSWORD_DEFAULT));
             $user->setAuthToken(bin2hex(random_bytes(16)));
-            $this->setCookieToClient('token', $user->getAuthToken());
+            $this->cookieHelper->setCookieToClient(CookieHelper::AUTH_TOKEN_NAME, $user->getAuthToken(), CookieHelper::AUTH_TOKEN_LIFETIME);
             $this->userMapper->addUser($user);
         }
         return $errors;
@@ -86,7 +93,7 @@ class AuthHelper
             if (password_needs_rehash($dbUser->getPassword(), PASSWORD_DEFAULT)) {
                 $this->userMapper->updatePassword(password_hash($user->getPassword(), PASSWORD_DEFAULT), $dbUser->getId());
             }
-            $this->setCookieToClient('token', $dbUser->getAuthToken());
+            $this->cookieHelper->setCookieToClient(CookieHelper::AUTH_TOKEN_NAME, $dbUser->getAuthToken(), CookieHelper::AUTH_TOKEN_LIFETIME);
         } else {
             $errors['all'] = "Не удалось войти. Пожалуйста, проверьте правильность логина и пароля.";
         }
@@ -98,7 +105,7 @@ class AuthHelper
      */
     public function logOut(): void
     {
-        $this->deleteCookieToClient('token', strval($_COOKIE['token']));
+        $this->cookieHelper->deleteCookieToClient(CookieHelper::AUTH_TOKEN_NAME, CookieHelper::AUTH_TOKEN_LIFETIME);
     }
 
     /**
@@ -108,8 +115,8 @@ class AuthHelper
      */
     public function isAuth(): bool
     {
-        if (isset($_COOKIE['token'])) {
-            return $this->userMapper->checkAuthToken(strval($_COOKIE['token']));
+        if (isset($_COOKIE[CookieHelper::AUTH_TOKEN_NAME])) {
+            return $this->userMapper->checkAuthToken(strval($_COOKIE[CookieHelper::AUTH_TOKEN_NAME]));
         }
         return false;
     }
@@ -122,7 +129,7 @@ class AuthHelper
     public function getUser()
     {
         if ($this->isAuth()) {
-            return $this->userMapper->getUserByAuthToken(strval($_COOKIE['token']));
+            return $this->userMapper->getUserByAuthToken(strval($_COOKIE[CookieHelper::AUTH_TOKEN_NAME]));
         }
         return null;
     }
@@ -150,27 +157,5 @@ class AuthHelper
         }
 
         return false;
-    }
-
-    /**
-     * Sets cookie to client
-     *
-     * @param string $name
-     * @param string $value
-     */
-    public function setCookieToClient(string $name, string $value): void
-    {
-        setcookie($name, $value, strtotime('1 year'), '/', null, false, true);
-    }
-
-    /**
-     * Deletes cookie to client
-     *
-     * @param string $name
-     * @param string $value
-     */
-    public function deleteCookieToClient(string $name, string $value): void
-    {
-        setcookie($name, $value, strtotime('-1 year'), '/', null, false, true);
     }
 }

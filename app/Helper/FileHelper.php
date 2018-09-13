@@ -60,6 +60,11 @@ class FileHelper
     private $authHelper;
 
     /**
+     * @var CookieHelper $cookieHelper
+     */
+    private $cookieHelper;
+
+    /**
      * @var User $user
      */
     private $user;
@@ -84,6 +89,7 @@ class FileHelper
         $this->searchMapper = $c->get('SearchMapper');
         $this->fileValidator = $c->get('FileValidator');
         $this->authHelper = $c->get('AuthHelper');
+        $this->cookieHelper = $c->get('CookieHelper');
         $this->user = $this->authHelper->getUser();
         $this->redis = $c->get('redis');
     }
@@ -140,7 +146,7 @@ class FileHelper
             $id = $this->fileMapper->uploadFile($file);
 
             if ($userToken !== null) {
-                $this->authHelper->setCookieToClient($file->getName(), $file->getUserToken());
+                $this->cookieHelper->setCookieToClient($file->getName(), $file->getUserToken(), CookieHelper::AUTH_TOKEN_LIFETIME);
             }
 
             $this->searchMapper->addIndex($id, $file->getOriginalName());
