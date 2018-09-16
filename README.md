@@ -42,15 +42,12 @@ location /storage {
 ```
 
 ## Tests
-##### For tests, you need a test database
-1. Create test database for tests
-2. Change configuration "db" in the `codeception.yml`, `tests/_data/config/config.json` and `tests/_data/config/sphinx.conf`
-
-##### Also, for tests you need to start a new sphinxsearch service
-1. Make sure that searchd is not running
-2. Change configuration "sphinx" in the `tests/_data/config/config.json` and `tests/_data/config/sphinx.conf`. Do not forget to change the path in which the sphinx files will be saved
-3. [Initialize search indexes] with the `indexer --config tests/_data/config/sphinx.conf --all` command
-4. [Start sphinx service] with the `searchd --config tests/_data/config/sphinx.conf` command
+1. Set environment to `testing` in the `config/config.json`
+2. Create test database for tests
+3. Change configuration in the `config/config_testing.json`, `config/sphinx_testing.conf`, `codeception.yml`, `tests/*.suite.yml`
+4. Stop sphinx service if it running
+5. [Initialize search indexes] with the `indexer --config config/sphinx_testing.conf --all` command
+6. [Start sphinx service] with the `searchd --config config/sphinx_testing.conf` command
 
 ##### Command to run the tests:
 ```

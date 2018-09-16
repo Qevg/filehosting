@@ -8,8 +8,16 @@
 actor: FunctionalTester
 modules:
     enabled:
+        - Db:
+            dsn: 'pgsql:host=127.0.0.1;dbname='
+            user: ''
+            password: ''
+            dump: 'tests/_data/filehosting.sql'
+            cleanup: true # run populator before each test
+            populate: true # run populator before all tests
+#            populator: 'pg_restore -U $user -h $host -d $dbname < $dump'
         - \Helper\Functional
         - \Herloct\Codeception\Module\Slim:
-            container: tests/container.php
+            container: tests/functional/index.php
         - REST:
             depends: \Herloct\Codeception\Module\Slim

@@ -58,7 +58,7 @@ INSERT INTO users (name, email, password, auth_token)
 VALUES ('testuser', 'testuser@example.com', '12345678', '013ef89f6d17841a2ac8c35b20q62b1c');
 
 INSERT INTO files (name, original_name, path, thumbnail_path, size, mime_type, user_id, media_info)
-VALUES ('testfile', 'test.jpg', '/var/www/uppu/tests/_data/testfile', '/var/www/uppu/tests/_data/testfile', '2054548', 'image/jpeg', 1, '{"dataformat":"jpg","resolution":"800x600","bits_per_sample":24}');
+VALUES ('testfile', 'test.jpg', '/var/www/uppu/tests/_data/testfile', '', '2054548', 'image/jpeg', 1, '{"dataformat":"jpg","resolution":"800x600","bits_per_sample":24}');
 
 INSERT INTO comments (file_id, parent_id, user_id, text, matpath)
 VALUES (1, NULL, 1, 'первый', '001');
