@@ -19,19 +19,19 @@
 
 ## Installation
 1. Use the `git clone https://github.com/Qevg/filehosting.git` command to clone the repository
-2. Set `public` directory as a document root on your web server
-3. Use the `composer install` command to install dependencies
-4. Import database `filehosting.sql` on your database
-5. Change configuration in the `config.json` and `sphinx.conf`
-6. Сonfigure the web server [as specified here]
-7. Set `upload max file size` and `post max size` on your web server
-    * The value must match the `maxFileSize` parameter in the `config.json`
+2. Use the `composer install` command to install dependencies
+3. Change configuration in the `config/config_production.json` and `config/sphinx.conf`
+4. Сonfigure the web server [as specified here]
+5. Set `public` directory as a document root on your web server
+6. Set `upload max file size` and `post max size` on your web server
+    * The values must match the `maxFileSize` parameter in the `config/config_production.json`
+7. Import database `filehosting.sql` on your database
 8. [Initialize search indexes] with the `indexer --config config/sphinx.conf --all` command
 9. [Start sphinx service] with the `searchd --config config/sphinx.conf` command
 
 ## Additional Features
 ### XSendfile
-If your server has `XSendFile` module installed and configured, then you can enable it in the `config.json` file, setting the `XSendFile` option to `on`. If you're using Nginx don't forget to set `storage` folder [as internal] in your config file.
+If your server has `XSendFile` module installed and configured, then you can enable it in the `config/config_production.json` file, setting the `XSendFile` option to `on`. If you're using Nginx don't forget to set `storage` folder [as internal] in your config file.
 
 Example:
 ```

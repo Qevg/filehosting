@@ -2,9 +2,26 @@
 
 use Slim\Container;
 
-$container['config'] = function (Container $c) {
+$container['env'] = function (Container $c) {
     $config = json_decode(file_get_contents(__DIR__ . '/../config/config.json'), true);
-    if ($config === null) {
+    if ($config === null && json_last_error() !== JSON_ERROR_NONE) {
+        throw new ConfigParseException(json_last_error_msg());
+    }
+
+    $env = isset($config['environment']) ? $config['environment'] : false;
+    if ($env === false) {
+        throw new ConfigParseException('environment is undefined in the config file "config.json"');
+    }
+
+    if ($env !== 'production' && $env !== 'development' && $env !== 'testing') {
+        throw new ConfigParseException('incorrect value "environment" in the config file "config.json". Allowable values: production, development, testing');
+    }
+    return $env;
+};
+
+$container['config'] = function (Container $c) {
+    $config = json_decode(file_get_contents(__DIR__ . "/../config/config_{$c['env']}.json"), true);
+    if ($config === null && json_last_error() !== JSON_ERROR_NONE) {
         throw new Exception(json_last_error_msg());
     }
     return $config;
