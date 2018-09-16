@@ -162,10 +162,10 @@ class FileHelper
      */
     public function removeFile(File $file)
     {
-        $this->fileMapper->removeFile($file->getName());
+        $this->fileMapper->removeFile($file->getId());
         $this->searchMapper->deleteIndex($file->getId());
-        $this->fileSystemHelper->unlink($this->pathHelper->getPathToFile($file->getName()));
-        if ($this->thumbnailHelper->isTypeSupported($file->getFormat())) {
+        $this->fileSystemHelper->unlink($file->getPath());
+        if (!empty($file->getThumbnailPath())) {
             $this->thumbnailHelper->removeThumbnail($file->getName());
         }
     }

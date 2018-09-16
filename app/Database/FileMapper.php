@@ -119,14 +119,18 @@ class FileMapper
 
     /**
      * Removes file
+     * First deletes comments to the file then deletes the file
      *
-     * @param string $fileName
+     * @param int $id
      */
-    public function removeFile(string $fileName): void
+    public function removeFile(int $id): void
     {
-        $sql = "DELETE FROM files WHERE name=:name_bind";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':name_bind', $fileName, \PDO::PARAM_STR);
+        $stmt = $this->db->prepare("DELETE FROM comments WHERE file_id=:id_bind");
+        $stmt->bindValue(':id_bind', $id, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        $stmt = $this->db->prepare("DELETE FROM files WHERE id=:id_bind");
+        $stmt->bindValue(':id_bind', $id, \PDO::PARAM_INT);
         $stmt->execute();
     }
 
