@@ -3,7 +3,6 @@ function getURLParameter(name) {
 }
 
 if (getURLParameter('updateFileData') !== null) {
-    console.log('updateFileData');
     showUpdateFileData(getURLParameter('updateFileData'));
 }
 

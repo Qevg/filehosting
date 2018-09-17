@@ -4,6 +4,7 @@ namespace Filehosting\Controller;
 
 use Filehosting\Entity\File;
 use Filehosting\Entity\User;
+use Filehosting\Exception\ConfigParseException;
 use Filehosting\Exception\FileUploadException;
 use Filehosting\Helper\AuthHelper;
 use Filehosting\Helper\FileHelper;
@@ -44,6 +45,11 @@ class UploadController
     private $user;
 
     /**
+     * @var int $maxFileSize
+     */
+    private $maxFileSize;
+
+    /**
      * UploadController constructor.
      *
      * @param Container $c
@@ -55,6 +61,11 @@ class UploadController
         $this->fileHelper = $c->get('FileHelper');
         $this->authHelper = $c->get('AuthHelper');
         $this->user = $this->authHelper->getUser();
+        $config = $c->get('config');
+        if (!isset($config['maxFileSize'])) {
+            throw new ConfigParseException('param maxFileSize is undefined in the config file');
+        }
+        $this->maxFileSize = $config['maxFileSize'];
     }
 
     /**
@@ -90,14 +101,14 @@ class UploadController
      *
      * $filename is the name of the file under which the file will be stored on disk
      *
-     * @return string name of the future file
+     * @return array name of the future file and max file size
      */
-    private function preUploadFile(): string
+    private function preUploadFile(): array
     {
         $fileName = bin2hex(random_bytes(8));
         $this->redis->set("PHPREDIS_SESSION:" . session_id(), serialize(array('fileName' => $fileName)));
         $this->redis->expire("PHPREDIS_SESSION:" . session_id(), 86400);
-        return $fileName;
+        return array('fileName' => $fileName, 'maxFileSize' => $this->maxFileSize);
     }
 
     /**

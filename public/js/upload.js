@@ -109,10 +109,15 @@ $(document).ready(function () {
                 preUploadFile: true
             },
             success: function (data) {
-                fileName = JSON.parse(data);
+                data = JSON.parse(data);
+                if (file.size > data.maxFileSize) {
+                    showFileLoadingError("Превышен максимально допустимый размер файла");
+                    return false;
+                }
+                fileName = data.fileName
                 $('#file-link').val(window.location.hostname + '/file/' + fileName);
                 $('#update-file-data_').attr('id', 'update-file-data_' + fileName);
-                uploadFile(file);
+                uploadFile();
             },
             error: function () {
                 showFileLoadingError();
