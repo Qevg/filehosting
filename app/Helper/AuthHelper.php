@@ -6,9 +6,6 @@ use Filehosting\Database\FileMapper;
 use Filehosting\Database\UserMapper;
 use Filehosting\Entity\User;
 use Filehosting\Validator\UserValidator;
-use function GuzzleHttp\Psr7\str;
-use Slim\Http\Request;
-use Slim\Http\Response;
 
 /**
  * Class AuthHelper

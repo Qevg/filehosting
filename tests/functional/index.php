@@ -1,8 +1,6 @@
 <?php
 
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
 use Slim\App;
 use Slim\Container;
 

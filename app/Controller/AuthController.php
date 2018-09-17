@@ -3,7 +3,6 @@
 namespace Filehosting\Controller;
 
 use Filehosting\Helper\AuthHelper;
-use PHPUnit\Runner\Exception;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;

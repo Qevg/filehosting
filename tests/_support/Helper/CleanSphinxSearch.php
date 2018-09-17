@@ -5,7 +5,6 @@ namespace Helper;
 use Codeception\Exception\ModuleException;
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\Module\Cli;
-use Codeception\TestInterface;
 
 /**
  * Class CleanSphinxSearch

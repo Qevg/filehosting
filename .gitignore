@@ -4,3 +4,4 @@ vendor
 /storage/
 /public/.htaccess
 TODO
+.php_cs.cache

@@ -3,7 +3,6 @@
 namespace Filehosting\Database;
 
 use Filehosting\Entity\User;
-use Slim\Container;
 
 /**
  * Class UserMapper

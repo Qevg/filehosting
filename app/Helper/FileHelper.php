@@ -7,7 +7,6 @@ use Filehosting\Database\SearchMapper;
 use Filehosting\Entity\File;
 use Filehosting\Entity\User;
 use Filehosting\Exception\FileUploadException;
-use Filehosting\Helper\PathHelper;
 use Filehosting\Validator\FileValidator;
 use Slim\Container;
 use Slim\Http\UploadedFile;

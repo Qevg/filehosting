@@ -3,7 +3,6 @@
 namespace Filehosting\Database;
 
 use Filehosting\Entity\Comment;
-use function PHPSTORM_META\type;
 
 /**
  * Class CommentMapper
