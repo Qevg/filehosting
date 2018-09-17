@@ -7,9 +7,10 @@
 4. [Pimple] dependency injection container
 5. [Twig] template engine
 6. [Sphinx] search engine
-6. [jQuery] javascript library
-7. [GetId3] media file parser
-8. [Codeception] testing PHP framework
+7. [jQuery] javascript library
+8. [GetId3] media file parser
+9. [Codeception] testing PHP framework
+10. [Selenium] automates browsers
 
 ## Requirements
 1. [PHP] >= 7.1
@@ -23,8 +24,8 @@
 3. Change configuration in the `config/config_production.json` and `config/sphinx.conf`
 4. Сonfigure the web server [as specified here]
 5. Set `public` directory as a document root on your web server
-6. Set `upload max file size` and `post max size` on your web server
-    * The values must match the `maxFileSize` parameter in the `config/config_production.json`
+6. Set `upload max file size` on your web server. The value must match the `maxFileSize` parameter in the `config/config_production.json`
+7. Set `post max size` on your web server. The value must be greater than `upload max file size`
 7. Import database `filehosting.sql` on your database
 8. [Initialize search indexes] with the `indexer --config config/sphinx.conf --all` command
 9. [Start sphinx service] with the `searchd --config config/sphinx.conf` command
@@ -45,6 +46,7 @@ location /storage {
 1. Set environment to `testing` in the `config/config.json`
 2. Create test database for tests
 3. Change configuration in the `config/config_testing.json`, `config/sphinx_testing.conf`, `codeception.yml`, `tests/*.suite.yml`
+    * [configure acceptance testing]
 4. Stop sphinx service if it running
 5. [Initialize search indexes] with the `indexer --config config/sphinx_testing.conf --all` command
 6. [Start sphinx service] with the `searchd --config config/sphinx_testing.conf` command
@@ -66,6 +68,7 @@ This application is licensed under the MIT license. For more information refer t
 [jQuery]: <https://jquery.org/>
 [GetId3]: <http://getid3.sourceforge.net/>
 [Codeception]: <https://codeception.com/>
+[Selenium]: <https://www.seleniumhq.org/>
 [PHP]: <https://secure.php.net/>
 [PostgreSQL]: <https://www.postgresql.org/>
 [Composer]: <https://getcomposer.org/>
@@ -73,4 +76,5 @@ This application is licensed under the MIT license. For more information refer t
 [Initialize search indexes]: <http://sphinxsearch.com/docs/current/ref-indexer.html>
 [Start sphinx service]: <http://sphinxsearch.com/docs/current/ref-searchd.html>
 [as internal]: <https://nginx.org/en/docs/http/ngx_http_core_module.html#internal>
+[configure acceptance testing]: <https://codeception.com/docs/03-AcceptanceTests#selenium-server>
 [License file]: <https://github.com/Qevg/filehosting/blob/master/LICENSE>

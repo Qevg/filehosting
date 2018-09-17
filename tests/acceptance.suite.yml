@@ -7,6 +7,26 @@
 actor: AcceptanceTester
 modules:
     enabled:
-        - PhpBrowser:
-            url: http://localhost/myapp
+        - Db:
+            dsn: 'pgsql:host=127.0.0.1;dbname='
+            user: ''
+            password: ''
+            dump: 'tests/_data/filehosting.sql'
+            cleanup: true # run populator before each test
+            populate: true # run populator before all tests
+#            populator: 'pg_restore -U $user -h $host -d $dbname < $dump'
+        - WebDriver:
+            url: ''
+            browser: # 'chrome' or 'firefox'
+        - \Helper\CleanSphinxSearch:
+            host: '127.0.0.1' # sphinx host
+            port: '9306' # sphinx port
+            depends:
+              Cli
         - \Helper\Acceptance
+extensions:
+    enabled:
+        - Codeception\Extension\RunProcess:
+            0: php -S 127.0.0.1:8000
+            1: java -jar /path/to/selenium-server.jar
+            sleep: 5

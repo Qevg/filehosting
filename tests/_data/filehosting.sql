@@ -55,7 +55,8 @@ ALTER TABLE comments
   ADD FOREIGN KEY (user_id) REFERENCES users(id);
 
 INSERT INTO users (name, email, password, auth_token)
-VALUES ('testuser', 'testuser@example.com', '12345678', '013ef89f6d17841a2ac8c35b20q62b1c');
+VALUES ('testuser', 'testuser@example.com', '$2y$10$DBPn8cFyWASKxL9dqzqKPO/34gTllaeyoZUnlWM7DGKmLcUrV/G9y', '013ef89f6d17841a2ac8c35b20q62b1c');
+-- password: 12345678 hash: $2y$10$DBPn8cFyWASKxL9dqzqKPO/34gTllaeyoZUnlWM7DGKmLcUrV/G9y
 
 INSERT INTO files (name, original_name, path, thumbnail_path, size, mime_type, user_id, media_info)
 VALUES ('testfile', 'test.jpg', '/var/www/uppu/tests/_data/testfile', '', '2054548', 'image/jpeg', 1, '{"dataformat":"jpg","resolution":"800x600","bits_per_sample":24}');
@@ -70,4 +71,4 @@ INSERT INTO comments (file_id, parent_id, user_id, text, matpath)
 VALUES (1, NULL, NULL , 'третий', '003');
 
 INSERT INTO comments (file_id, parent_id, user_id, text, matpath)
-VALUES (1, NULL, NULL , 'первый.первый', '001.001');
+VALUES (1, 1, NULL , 'первый.первый', '001.001');
