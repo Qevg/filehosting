@@ -428,6 +428,10 @@ progress::-webkit-progress-value {
     color: red;
 }
 
+.warning-for-anon-file-upload {
+    margin-bottom: 10px;
+}
+
 .main-page-file {
     margin-top: 70px;
 }
