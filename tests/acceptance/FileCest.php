@@ -167,12 +167,13 @@ class FileCest
         $I->see('Превышен максимально допустимый размер файла');
     }
 
-    public function testUnknownErrorWhileLoadingFile(AcceptanceTester $I)
+    public function testCsrfErrorWhileLoadingFile(AcceptanceTester $I)
     {
-        $I->wantTo('Test unknown error while loading file');
+        $I->wantTo('Test csrf error while loading file');
         $I->amOnPage('/');
         $I->seeElementInDOM('input', ['name' => 'file']);
-        $I->attachFile('file', '');
+        $I->setCookie('PHPSESSID', 'qwe');
+        $I->attachFile('file', 'testfile');
         sleep(1);
         $I->see('При загрузке файла произошка ошибка. Попробуйте ещё раз');
     }

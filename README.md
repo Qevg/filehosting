@@ -13,22 +13,29 @@
 10. [Selenium] automates browsers
 
 ## Requirements
-1. [PHP] >= 7.1
+1. [PHP] >= 7.1 and extensions: `mbstring` `PDO` `pdo_mysql` `pdo_pgsql` `pgsql` `redis` `gd`
 2. [PostgreSQL]
 3. [Sphinx]
-4. [Composer]
+4. [Redis]
+5. [Composer]
 
 ## Installation
 1. Use the `git clone https://github.com/Qevg/filehosting.git` command to clone the repository
-2. Use the `composer install` command to install dependencies
-3. Change configuration in the `config/config_production.json` and `config/sphinx.conf`
-4. Сonfigure the web server [as specified here]
-5. Set `public` directory as a document root on your web server
-6. Set `upload max file size` on your web server. The value must match the `maxFileSize` parameter in the `config/config_production.json`
-7. Set `post max size` on your web server. The value must be greater than `upload max file size`
-7. Import database `filehosting.sql` on your database
-8. [Initialize search indexes] with the `indexer --config config/sphinx.conf --all` command
-9. [Start sphinx service] with the `searchd --config config/sphinx.conf` command
+2. Use the `cd filehosting` command to go to the project directory
+3. Use the `composer install` command to install dependencies
+### Docker
+1. Use the `make configure-docker-production` command to configure production enviroment
+2. Start the containers `docker-compose -f docker-compose.production.yml up`
+3. Restore database dump `docker exec -i $(docker-compose -f docker-compose.production.yml ps -q postgres) psql -U filehosting -d filehosting_production < filehosting.sql`
+### Or by hand
+1. Install php extensions: `mbstring` `PDO` `pdo_mysql` `pdo_pgsql` `pgsql` `redis` `gd`
+2. Change configuration in the `config/config_production.json` and `config/sphinx.conf`
+3. Сonfigure the web server [as specified here]
+4. Set `public` directory as a document root on your web server
+5. Configure params `file_uploads`, `upload_max_filesize`, `post_max_size`, `max_file_uploads`, `client_max_body_size`, `sendfile`, etc.
+6. Import database `filehosting.sql` on your database
+7. [Initialize search indexes] with the `indexer --config config/sphinx.conf --all` command
+8. [Start sphinx service] with the `searchd --config config/sphinx.conf` command
 
 ## Additional Features
 ### XSendfile
@@ -43,18 +50,9 @@ location /storage {
 ```
 
 ## Tests
-1. Set environment to `testing` in the `config/config.json`
-2. Create test database for tests
-3. Change configuration in the `config/config_testing.json`, `config/sphinx_testing.conf`, `codeception.yml`, `tests/*.suite.yml`
-    * [configure acceptance testing]
-4. Stop sphinx service if it running
-5. [Initialize search indexes] with the `indexer --config config/sphinx_testing.conf --all` command
-6. [Start sphinx service] with the `searchd --config config/sphinx_testing.conf` command
-
-##### Command to run the tests:
-```
-$ codecept run
-```
+1. Use the `composer install` command to install dependencies
+2. Use the `make configure-docker-testing` command to configure testing enviroment
+3. Use the `docker-compose -f docker-compose.testing.yml run --rm codecept run` command to start containers and run tests
 
 ## License
 This application is licensed under the MIT license. For more information refer to [License file].

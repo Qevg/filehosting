@@ -1,0 +1,19 @@
+{
+  "db": {
+    "host": "postgres",
+    "port": 5432,
+    "dbname": "filehosting_testing",
+    "user": "filehosting",
+    "password": "qwerty"
+  },
+  "redis": {
+    "host": "redis",
+    "port": "6379"
+  },
+  "sphinx": {
+    "host": "sphinx",
+    "port": "9306"
+  },
+  "maxFileSize": "10000",
+  "XSendFile": "off"
+}
