@@ -15,3 +15,12 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
     && docker-php-ext-install gd
 
 RUN pecl install redis && docker-php-ext-enable redis
+
+RUN apt-get update \
+    && mkdir -p /usr/share/man/man1 \
+    && mkdir -p /usr/share/man/man7 \
+    && apt-get install -y --no-install-recommends postgresql-client \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+ENTRYPOINT [".docker/postgres/wait-for-postgres.sh", "codecept"]

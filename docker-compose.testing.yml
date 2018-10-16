@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  nginx:
+  web:
     container_name: filehosting.site
     image: nginx:latest
     ports:
@@ -25,6 +25,7 @@ services:
       - .:/var/www/filehosting
       - ./.docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
     restart: always
+    privileged: true
   postgres:
     container_name: postgres
     image: postgres:latest
@@ -60,8 +61,8 @@ services:
       - ./tests:/project/tests
       - ./codeception.yml:/project/codeception.yml
     depends_on:
+      - web
       - chrome
-      - nginx
   chrome:
     container_name: chrome
     image: selenium/standalone-chrome-debug:3.13

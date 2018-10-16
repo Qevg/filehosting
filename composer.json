@@ -5,14 +5,7 @@
     "slim/csrf": "^0.8.2",
     "twig/twig": "^2.0",
     "slim/twig-view": "^2.3",
-    "james-heinrich/getid3": "^1.9",
-    "ext-PDO": "*",
-    "ext-pdo_pgsql": "*",
-    "ext-pdo_mysql": "*",
-    "ext-mbstring": "*",
-    "ext-redis": "*",
-    "ext-pgsql": "*",
-    "ext-gd": "*"
+    "james-heinrich/getid3": "^1.9"
   },
   "autoload": {
     "psr-4": {

@@ -1,0 +1,28 @@
+language: php
+
+php:
+  - 7.1
+
+sudo: required
+
+services:
+  - docker
+
+before_script:
+  - sudo service mysql stop
+  - sudo service postgresql stop
+
+script:
+  - sudo chown www-data storage
+  - sudo chown www-data public/thumbnails
+  - composer install --no-interaction
+  - make configure-docker-testing
+  - docker-compose -f docker-compose.testing.yml build
+  - docker-compose -f docker-compose.testing.yml run --rm codecept run
+
+addons:
+  hosts:
+    - filehosting.site
+
+notifications:
+  email: false
